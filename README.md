@@ -1,49 +1,55 @@
-This program solves the “Code vs Zombies” problem by prioritizing saving humans who are in immediate danger and moving the player character (Ash) toward the zombie that is about to reach a human next.
+# 🧟‍♂️ Code vs Zombies
 
-For every turn, the algorithm:
+This program solves the **Code vs Zombies** challenge by prioritizing saving humans who are in immediate danger and moving the player character (Ash) toward the zombie that will reach a human the soonest.
 
-Reads all current positions of Ash, humans, and zombies.
+---
 
-Identifies the most endangered human by finding the closest zombie to each human and estimating:
+## 🚀 How It Works
 
-how long a zombie will take to reach that human, and
+On every game turn, the algorithm:
 
-how long Ash will take to reach shooting range of that zombie.
+1. **Reads all current positions** of Ash, humans, and zombies.
+2. **Identifies the most endangered human** by locating the closest zombie to each human and estimating:
+   - How long a zombie will take to reach that human.
+   - How long Ash will take to reach shooting range of that zombie.
+3. **Chooses the zombie/human pair with the smallest positive time difference**, meaning Ash can still save that human.
+4. **Targets that zombie**, prioritizing immediate defense over long-term exploration.
+5. **Performs local optimization (hill climbing)** around the selected target to refine the movement direction.
+6. **Outputs target coordinates**, causing Ash to move 1000 units toward that position.
 
-Chooses the zombie/human pair with the smallest positive time difference (meaning Ash can still get there in time).
+This approach is focused on **practical survivability**:  
+It tries to guarantee at least one human remains alive while still maximizing zombie eliminations.
 
-Selects that zombie’s position as the target.
+---
 
-Performs a small local optimization around the chosen target to slightly adjust and improve the move direction.
+## 🧠 Techniques Used
 
-Outputs target coordinates so Ash moves 1000 units toward that position.
+The solution uses a **combinational heuristic** with basic **local search (Hill Climbing)**.
 
-This approach is focused on practical survivability: it tries to ensure that at least one human remains alive while maximizing zombie eliminations.
+### Algorithmic Concepts
 
+- **Greedy Decision-Making**  
+  Selects the zombie that threatens any human the soonest, ensuring the AI reacts quickly to danger.
 
-Techniques Used
+- **Time-Based Heuristic**  
+  Estimates:
+  - Time for each zombie to reach a human.
+  - Time for Ash to reach lethal shooting range.  
+  These values determine whether a human is “savable.”
 
-This solution uses a combinational heuristic with basic local search (Hill Climbing).
+- **Hill Climbing (Local Optimization)**  
+  After choosing an initial target, the algorithm:
+  - Tests a small grid of candidate positions around it (±800 and ±400 offsets).
+  - Computes a simple score based on proximity to zombies.
+  - Picks the best local position.  
+  This improves targeting direction without full simulation or random search.
 
-Algorithmic Concepts Used:
+---
 
-Greedy Decision-Making
-The bot selects the zombie that threatens any human the soonest, ensuring urgent defense rather than long-term planning.
+## 📌 Goal
 
-Time-Based Heuristic
-The algorithm estimates:
+Keep humans alive while eliminating as many zombies as possible, using efficient, fast, and deterministic decision-making.
 
-Time for each zombie to reach a human
+---
 
-Time for Ash to reach lethal range
-and uses these calculated values to decide whether a human is “savable.”
-
-Hill Climbing (Local Optimization)
-After selecting a base target, the program:
-
-Tests a small grid of candidate positions around the target (±800 and ±400 offsets)
-
-Computes a simple score based on proximity to zombies
-
-Chooses the best local position
-This improves targeting direction without full simulation or random search.
+Feel free to explore, modify, or improve the strategy!
